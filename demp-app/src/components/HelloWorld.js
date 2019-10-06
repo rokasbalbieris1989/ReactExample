@@ -1,7 +1,7 @@
 import React from 'react';
 
 //named export
-export const Helloworld = () => {
+export const HelloWorld = () => {
     // return React.createElement(
     //     'h1',
     //     null,
