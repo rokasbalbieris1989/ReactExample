@@ -1,46 +1,40 @@
 import React from 'react';
 import { carsPropType } from '../propTypes/cars';
+import PropTypes from 'prop-types';
 
-export const CarTable = ({cars}) => {
+import { ViewCarRow } from './ViewCarRow';
+import { EditCarRow } from './EditCarRow';
+
+export const CarTable = ({
+    cars, editCarId,
+    onEditCar: editCar,
+    onDeleteCar: deleteCar,
+    onSaveCar: saveCar,
+    onCancelCar: cancelCar,
+}) => {
+    
     return <table>
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Color</th>
-                <th>Price</th>
+                <th><label htmlFor="edit-make-input">Make</label></th>
+                <th><label htmlFor="edit-mdel-input">Model</label></th>
+                <th><label htmlFor="edit-year-input">Year</label></th>
+                <th><label htmlFor="edit-color-input">Color</label></th>
+                <th><label htmlFor="edit-price-input">Price</label></th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {cars.length === 0 && <tr>
-                <td colSpan="6">There are no cars.</td>
+                <td colSpan="7">There are no cars.</td>
             </tr>}
-            {/* <tr>
-                <td>1</td>
-                <td>Ford</td>
-                <td>Fusion Hybrid</td>
-                <td>2018</td>
-                <td>Silver</td>
-                <td>30000</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Tesla</td>
-                <td>S</td>
-                <td>2017</td>
-                <td>Red</td>
-                <td>120000</td>
-            </tr>    */}
-            {cars.map(car => <tr key={car.id}>
-                <td>{car.id}</td>
-                <td>{car.make}</td>
-                <td>{car.model}</td>
-                <td>{car.year}</td>
-                <td>{car.color}</td>
-                <td>{car.price}</td>
-            </tr>)}
+            
+            {cars.map(car => car.id === editCarId
+                ? <EditCarRow key={car.id} car={car}
+                    onSaveCar={saveCar}  onCancelCar={cancelCar} />
+                : <ViewCarRow key={car.id} car={car}
+                    onEditCar={editCar}  onDeleteCar={deleteCar} />)}
         </tbody>
         {/* <tfoot>
             <tr>Footer of table</tr>
@@ -50,8 +44,14 @@ export const CarTable = ({cars}) => {
 
 CarTable.defaultProps = {
     cars: [],
+    editCarId: -1,
 };
 
 CarTable.propTypes = {
     cars: carsPropType,
-}
+    editCarId: PropTypes.number,
+    onEditCar: PropTypes.func.isRequired,
+    onDeleteCar: PropTypes.func.isRequired,
+    onSaveCar: PropTypes.func.isRequired,
+    onCancelCar: PropTypes.func.isRequired,
+};
