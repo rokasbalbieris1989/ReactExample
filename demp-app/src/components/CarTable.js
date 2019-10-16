@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { carsPropType } from '../propTypes/cars';
 import PropTypes from 'prop-types';
 
 import { ViewCarRow } from './ViewCarRow';
 import { EditCarRow } from './EditCarRow';
 
-export const CarTable = ({
+export const CarTable = memo(({
     cars, editCarId,
     onEditCar: editCar,
     onDeleteCar: deleteCar,
@@ -40,7 +40,7 @@ export const CarTable = ({
             <tr>Footer of table</tr>
         </tfoot> */}
     </table>
-};
+});
 
 CarTable.defaultProps = {
     cars: [],

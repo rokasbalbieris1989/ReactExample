@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useDefaultInputFocus } from '../hooks/useDefaultInputFocus'; 
+
 import { carPropType } from '../propTypes/cars';
 import { useForm } from '../hooks/useForm';
 
@@ -12,6 +14,8 @@ export const EditCarRow = ({
 
     const [ carForm , change ] = useForm({...car});
 
+    const defaultInputRef = useDefaultInputFocus();
+
     const saveCar = () => {
         onSaveCar({
             ...carForm,
@@ -22,7 +26,7 @@ export const EditCarRow = ({
     return <tr>
     <td>{car.id}</td>
     <td>
-        <input type="text" id="edit-make-input" name="make" 
+        <input type="text" id="edit-make-input" name="make" ref={defaultInputRef}
         value={carForm.make} onChange={change} />
     </td>
     <td>
